@@ -3,7 +3,7 @@
 # BART Singularity Guide
  The Singularity image has BART installed at `/bart_dir`. The `$topdir` environment variable is set to this directory inside the image. This means that the instructions for the demo listed here https://github.com/exosports/BART/tree/master/examples/demo still work, but we need to mount a directory for outputs into the container for two reasons:
 1. The demo expects your output directory to be parallel to the BART directory
-2. The container file system is read-only (this is only a problem because of 1, being read-only is actually preferred because it helps ensure reproducible results)
+2. The container file system is read-only (this is only a problem because of (1); being read-only is actually preferred because it helps ensure reproducible results)
 - If the output directory wasn't required to be parallel to BART, you could run the container anywhere in `$HOME` because Singularity mounts `$HOME` of the current user into the container by default
 
 The image has a directory parallel to BART that is meant for output at `/bart_dir/run`. Make a directory on your host system where you want to store results. For the sake of this guide, let's say it's under your current directory at `demo/run` and you have pulled the singularity image 
