@@ -1,11 +1,20 @@
 [![https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg](https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg)](https://singularity-hub.org/collections/4946)
 
 # BART Singularity Guide
- The singularity image has BART installed at `/bart_dir`. The `$topdir` environment variable is set to this directory inside the image. This means that the instructions here https://github.com/exosports/BART/tree/master/examples/demo still work, but we need to mount a directory for outputs into the container because the container is read-only. The image has a directory for this purpose at `/bart_dir/run`. Make a directory on your host system where you want to store results. For the sake of this guide, let's say it's under your current directory at `demo/run` and you have the singularity image 
+ The Singularity image has BART installed at `/bart_dir`. The `$topdir` environment variable is set to this directory inside the image. This means that the instructions for the demo listed here https://github.com/exosports/BART/tree/master/examples/demo still work, but we need to mount a directory for outputs into the container for two reasons:
+1. The demo expects your output directory to be parallel to the BART directory
+2. The container is read-only (this is only a problem because of 1.)
+- If the output directory wasn't required to be parallel to BART, you could run the container anywhere in `$HOME` because Singularity mounts `$HOME` of the current user into the container by default
+
+The image has a directory parallel to BART that is meant for output at `/bart_dir/run`. Make a directory on your host system where you want to store results. For the sake of this guide, let's say it's under your current directory at `demo/run` and you have the singularity image 
  ```
 singularity pull --name bart.sif shub://davecwright3/bart-singularity
 ```
-in your current directory as well. Then start a shell in the singularity container with the bind mount specified: `singularity shell -B demo/run:/bart_dir/run bart.sif`. Now just `cd $topdir/run` and follow the instructions here https://github.com/exosports/BART/tree/master/examples/demo.
+in your current directory as well. Then start a shell in the singularity container with the bind mount specified
+```
+singularity shell -B demo/run:/bart_dir/run bart.sif
+```
+The BART conda environment will be automatically activated. Now just `cd $topdir/run` and follow the instructions here https://github.com/exosports/BART/tree/master/examples/demo if you would like to do a demo run. You can `exit` the container whenever you are done, and your results will remain in your `demo/run` directory.
 
 # License
 Bayesian Atmospheric Radiative Transfer (BART), a code to infer
